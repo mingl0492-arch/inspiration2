@@ -1,0 +1,19 @@
+本版本只生成 Windows 安装包，不再生成 portable 便携版。
+
+更新内容：
+1. package.json 中 dist:win 改成：
+   electron-builder --win nsis --publish never
+
+2. build.win.target 只保留 nsis：
+   "target": ["nsis"]
+
+3. artifactName 改成：
+   灵感管理安装包-${version}-${arch}.${ext}
+
+4. GitHub Actions 只上传 release/*.exe，避免把 latest.yml、blockmap、builder-debug.yml 一起下载。
+
+使用方式：
+- 把本压缩包内容上传/覆盖到 GitHub 仓库根目录。
+- 进入 Actions → Build Windows EXE → Run workflow。
+- 构建成功后下载 Artifacts → inspiration-manager-windows-installer。
+- 解压后运行“灵感管理安装包-1.0.0-x64.exe”，会进入安装流程。

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none';" />
+  <title>灵感管理</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">✦</div>
+        <div>
+          <h1>灵感管理</h1>
+          <p>创建数据 · 收集灵感 · 自由连线</p>
+        </div>
+      </div>
+
+      <div class="new-data">
+        <input id="dataNameInput" class="input" placeholder="新建数据名称" />
+        <button id="addDataBtn" class="primary-btn">新建</button>
+      </div>
+
+      <div id="dataList" class="data-list"></div>
+    </aside>
+
+    <section class="canvas-shell">
+      <div class="toolbar">
+        <div class="title-box">
+          <h2 id="currentTitle">我的灵感空间</h2>
+          <p id="currentSubTitle">当前空间：0 个灵感块，0 条连线</p>
+        </div>
+        <div class="toolbar-actions">
+          <button id="addIdeaBtn" class="ghost-btn">＋ 添加灵感块</button>
+          <button id="connectBtn" class="ghost-btn">⛓ 连线模式</button>
+          <button id="clearBtn" class="ghost-btn">全部清空</button>
+        </div>
+      </div>
+
+      <div id="canvas" class="canvas">
+        <svg id="connectionLayer" class="connection-layer"><g id="connectionGroup"></g></svg>
+        <div id="zoomLayer" class="zoom-layer"></div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-card">
+            <strong>这里是灵感池</strong>
+            <span>添加灵感块后，可以拖拽排布、点击编辑、开启皇冠、绑定标签，并让灵感块之间自由连线。</span>
+          </div>
+        </div>
+        <div id="selectHint" class="select-hint">连线模式：请选择两个灵感块。重复选择同一对会删除连线。</div>
+      </div>
+    </section>
+
+    <aside class="insight-panel">
+      <h3>灵感面板</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">灵感类别</div>
+          <div id="categoryCount" class="stat-num">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">灵感总数</div>
+          <div id="ideaCount" class="stat-num">0</div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <strong>标签编辑</strong>
+        <span>添加 / 编辑 / 删除</span>
+      </div>
+      <div class="tag-form">
+        <input id="tagNameInput" class="input" placeholder="输入标签名称" />
+        <button id="addTagBtn" class="primary-btn">添加</button>
+      </div>
+      <div id="tagList" class="tag-list"></div>
+    </aside>
+  </main>
+
+  <section id="editorDrawer" class="editor-drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>编辑灵感块</h3>
+      <button id="closeEditorBtn" class="close-btn">✕</button>
+    </div>
+    <div class="editor-body">
+      <div>
+        <label class="field-label" for="ideaTitleInput">标题</label>
+        <input id="ideaTitleInput" class="input" placeholder="灵感标题" />
+      </div>
+
+      <div>
+        <label class="field-label">灵感评级</label>
+        <div id="drawerRatingOptions" class="rating-options">
+          <button type="button" class="rating-option rating-option-crown" data-rating="crown">♛ 皇冠</button>
+          <button type="button" class="rating-option rating-option-diamond" data-rating="diamond"><span class="inline-diamond-icon"></span> 钻石</button>
+          <button type="button" class="rating-option rating-option-star" data-rating="star">★ 星星</button>
+        </div>
+        <p class="rating-help">未评级时，灵感块默认显示灰色星星；再次点击已选评级可取消评级。</p>
+      </div>
+
+      <div>
+        <label class="field-label">灵感标签</label>
+        <div id="editorTagChecks" class="tag-checks"></div>
+      </div>
+
+      <div class="editor-toolbar">
+        <button data-cmd="bold"><b>B</b></button>
+        <button data-cmd="italic"><i>I</i></button>
+        <button data-cmd="underline"><u>U</u></button>
+        <button data-cmd="insertUnorderedList">列表</button>
+        <button data-cmd="formatBlock" data-value="h3">标题</button>
+        <button data-cmd="formatBlock" data-value="blockquote">引用</button>
+      </div>
+
+      <div>
+        <label class="field-label">富文本内容（仅文本，不支持图片）</label>
+      </div>
+      <div id="ideaContentEditor" class="rich-editor" contenteditable="true"></div>
+    </div>
+
+    <div class="drawer-actions">
+      <button id="saveIdeaBtn" class="primary-btn save-button">保存</button>
+      <button id="deleteIdeaBtn" class="danger-btn">删除灵感块</button>
+    </div>
+  </section>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

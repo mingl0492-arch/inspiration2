@@ -1,0 +1,46 @@
+{
+  "name": "inspiration-manager-local",
+  "version": "1.0.9",
+  "description": "本地离线运行的灵感管理应用：数据集、灵感块、连线、皇冠、标签和富文本编辑。",
+  "main": "src/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis --publish never",
+    "dist:dir": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.local.inspirationmanager",
+    "productName": "灵感管理",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "README.md"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "灵感管理安装包-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "灵感管理",
+      "deleteAppDataOnUninstall": false,
+      "perMachine": false
+    },
+    "publish": null
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  }
+}
